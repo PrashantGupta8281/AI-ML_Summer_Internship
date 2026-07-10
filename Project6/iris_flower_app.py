@@ -1,0 +1,271 @@
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.datasets import load_iris
+
+# -------------------------------------------------------------
+# 1. Page Configuration & Title
+# -------------------------------------------------------------
+st.set_page_config(page_title="K-Means Clustering: Iris Dataset", layout="wide")
+st.markdown("""
+<style>
+
+/* Main App */
+.stApp {
+    background: linear-gradient(135deg,#EEF2FF,#F8FAFC,#FCE7F3);
+}
+
+/* Title */
+h1{
+    text-align:center;
+    color:#3B0764;
+    font-size:50px;
+    font-weight:900;
+}
+
+/* Headers */
+h2,h3{
+    color:#4C1D95;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"]{
+    background:linear-gradient(180deg,#312E81,#6D28D9);
+    color:white;
+}
+
+[data-testid="stSidebar"] *{
+    color:white;
+}
+
+/* Cards */
+div[data-testid="stVerticalBlock"]>div{
+    background:rgba(255,255,255,0.75);
+    padding:20px;
+    border-radius:18px;
+    backdrop-filter:blur(12px);
+    box-shadow:0px 8px 20px rgba(0,0,0,0.15);
+    margin-bottom:15px;
+}
+
+/* Dataframe */
+[data-testid="stDataFrame"]{
+    border-radius:15px;
+    overflow:hidden;
+}
+
+/* Buttons */
+.stButton>button{
+    background:linear-gradient(90deg,#9333EA,#EC4899);
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:10px 20px;
+    transition:0.3s;
+}
+
+.stButton>button:hover{
+    transform:scale(1.05);
+    box-shadow:0px 8px 20px rgba(236,72,153,.5);
+}
+
+/* Metrics */
+[data-testid="metric-container"]{
+    background:white;
+    border-radius:15px;
+    padding:15px;
+    box-shadow:0px 5px 15px rgba(0,0,0,.1);
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+# 🌸 Iris Flower Clustering Dashboard
+
+### Interactive Machine Learning Visualization using **K-Means**
+
+Explore clustering, scaling, and the Elbow Method in a beautiful dashboard.
+""")
+
+# -------------------------------------------------------------
+# 2. Data Loading & Preparation
+# -------------------------------------------------------------
+@st.cache_data
+def load_data():
+    iris = load_iris()
+    # Create the initial dataframe with all features
+    df_raw = pd.DataFrame(iris.data, columns=iris.feature_names)
+    df_raw['flower'] = iris.target
+
+    # Drop sepal features and target for simplicity as per exercise instructions
+    df_filtered = df_raw.drop(['sepal length (cm)', 'sepal width (cm)', 'flower'], axis='columns')
+    return df_filtered
+
+df = load_data()
+
+# -------------------------------------------------------------
+# Sidebar
+# -------------------------------------------------------------
+st.sidebar.markdown("""
+# ⚙️ Controls
+
+Adjust the clustering parameters and explore how K-Means behaves.
+""")
+
+use_scaling = st.sidebar.checkbox(
+    "Apply MinMaxScaler?",
+    value=False
+)
+
+k_value = st.sidebar.slider(
+    "Select Number of Clusters (K):",
+    min_value=1,
+    max_value=6,
+    value=3
+)
+
+
+# -------------------------------------------------------------
+# Metrics
+# -------------------------------------------------------------
+c1, c2, c3 = st.columns(3)
+
+c1.metric("🌼 Samples", len(df))
+c2.metric("📊 Features", df.shape[1])
+c3.metric("🎯 Selected K", k_value)
+
+# -------------------------------------------------------------
+# 4. Data Preprocessing (Scaling)
+# -------------------------------------------------------------
+if use_scaling:
+    scaler = MinMaxScaler()
+    scaled_features = scaler.fit_transform(df[['petal length (cm)', 'petal width (cm)']])
+    df_cluster = pd.DataFrame(scaled_features, columns=['petal length (cm)', 'petal width (cm)'])
+    st.sidebar.success("MinMaxScaler Applied!")
+else:
+    df_cluster = df.copy()
+
+# -------------------------------------------------------------
+# 5. K-Means Clustering Construction
+# -------------------------------------------------------------
+km = KMeans(n_clusters=k_value, random_state=42)
+yp = km.fit_predict(df_cluster[['petal length (cm)', 'petal width (cm)']])
+df_cluster['cluster'] = yp
+
+# -------------------------------------------------------------
+# 6. Main Dashboard Interface Layout
+# -------------------------------------------------------------
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("Interactive Cluster Plot")
+
+    fig, ax = plt.subplots(figsize=(6, 4.5))
+
+    fig.patch.set_facecolor("#FFFFFF")
+    ax.set_facecolor("#F8FAFC")
+    ax.grid(True, linestyle="--", alpha=0.3)
+
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+    # Better Colors
+    colors = ["#6366F1", "#EC4899", "#22C55E", "#F97316", "#EAB308", "#06B6D4"]
+
+    for cluster_id in range(k_value):
+        cluster_df = df_cluster[df_cluster.cluster == cluster_id]
+
+        ax.scatter(
+            cluster_df['petal length (cm)'],
+            cluster_df['petal width (cm)'],
+            s=85,
+            color=colors[cluster_id],
+            edgecolors="white",
+            linewidth=1.3,
+            alpha=0.85,
+            label=f"Cluster {cluster_id}"
+        )
+        
+    # Plot cluster centers if K > 1
+    if k_value > 1:
+        ax.scatter(
+            km.cluster_centers_[:, 0],
+            km.cluster_centers_[:, 1],
+            c="black",
+            marker="*",
+            s=350,
+            edgecolors="gold",
+            linewidth=2,
+            label="Centroids"
+        )
+
+    ax.set_xlabel('Petal Length (cm)')
+    ax.set_ylabel('Petal Width (cm)')
+    ax.set_title(f"Clusters Formed (K={k_value})")
+    ax.legend()
+    st.pyplot(fig)
+
+with col2:
+    st.subheader("Elbow Plot (Optimal K Determination)")
+
+    # Calculate sum of squared errors dynamically based on scaling choice
+    sse = []
+    k_rng = range(1, 10)
+    for k in k_rng:
+        km_loop = KMeans(n_clusters=k, random_state=42)
+        km_loop.fit(df_cluster[['petal length (cm)', 'petal width (cm)']])
+        sse.append(km_loop.inertia_)
+
+    # Build the line chart
+    fig_elbow, ax_elbow = plt.subplots(figsize=(6, 4.5))
+    ax_elbow.set_xlabel('K')
+    ax_elbow.set_ylabel('Sum of squared error')
+    ax_elbow.plot(k_rng, sse, marker='o', color='purple', linestyle='--')
+    ax_elbow.set_title("Elbow Method Evaluation")
+    st.pyplot(fig_elbow)
+
+# -------------------------------------------------------------
+# 7. Raw Processed Data Overview Element
+# -------------------------------------------------------------
+st.subheader("📊 Cluster Distribution")
+
+cluster_counts = df_cluster["cluster"].value_counts().sort_index()
+st.bar_chart(cluster_counts)
+
+st.write("---")
+st.subheader("Processed DataFrame Preview")
+st.dataframe(
+    df_cluster.head(10).style
+    .background_gradient(cmap="viridis")
+    .format("{:.2f}"),
+    use_container_width=True
+) 
+
+with st.expander("📘 About this Project"):
+    st.write("""
+    This dashboard demonstrates:
+    
+    🌸 K-Means Clustering
+    📊 Iris Dataset
+    📈 Elbow Method
+    ⚡ MinMax Scaling
+    🎯 Interactive ML Dashboard
+    """)
+
+
+
+st.markdown(
+"""
+<div style='text-align:center; padding:15px; font-size:18px; color:#6B7280;'>
+🌸 Built with ❤️ using Streamlit | Machine Learning Dashboard
+</div>
+""",
+unsafe_allow_html=True
+)
+#connect with me
+st.sidebar.title("🧑🏻‍💻 Connect with me")
+st.sidebar.markdown("[linkedin](https://www.linkedin.com/in/prashant-gupta-012320389?utm_source=share_via&utm_content=profile&utm_medium=member_android)")
+st.sidebar.markdown("[GitHub](https://github.com/PrashantGupta8281)")
