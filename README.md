@@ -12,3 +12,5 @@ Project6 : https://day4project-gfufscdwsq79bdv6suyth2.streamlit.app/#processed-d
 
 
 Project7 : https://project7-2ljr6doqrichkwyhfefhcp.streamlit.app/
+
+Project8 : https://irisusingknnp8-cbjufqfjd9wyzt3wk9ngpn.streamlit.app/
