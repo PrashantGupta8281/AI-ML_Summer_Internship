@@ -121,6 +121,19 @@ This project predicts Canada's Per Capita Income using a Linear Regression model
 
 st.sidebar.success("Made with ❤️ using Python")
 
+st.title("My Portfolio")
+
+st.markdown("""
+### 👋 About Me
+
+**Name:** Prashant Gupta
+
+🔗 **LinkedIn:** [PrashantGupta](https://www.linkedin.com/in/prashant-gupta-012320389?utm_source=share_via&utm_content=profile&utm_medium=member_android)
+
+💻 **GitHub:** [PrashantGupta](https://github.com/PrashantGupta8281/AI-ML_Summer_Internship)
+""")
+
+
 # ---------------- Statistics ----------------
 col1,col2,col3=st.columns(3)
 
@@ -186,14 +199,3 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("My Portfolio")
-
-st.markdown("""
-### 👋 About Me
-
-**Name:** Prashant Gupta
-
-🔗 **LinkedIn:** [PrashantGupta](https://www.linkedin.com/in/prashant-gupta-012320389?utm_source=share_via&utm_content=profile&utm_medium=member_android)
-
-💻 **GitHub:** [PrashantGupta](https://github.com/PrashantGupta8281/AI-ML_Summer_Internship)
-""")
