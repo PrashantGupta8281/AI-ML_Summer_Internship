@@ -13,4 +13,4 @@ Project6 : https://ai-mlsummerinternship-k8ma7cbowlaaehj5iq2gxx.streamlit.app/
 
 Project7 : https://ai-mlsummerinternship-a9dqqlmec4w8l3xtfw5cfs.streamlit.app/
 
-Project8 : https://irisusingknnp8-cbjufqfjd9wyzt3wk9ngpn.streamlit.app/
+Project8 : https://ai-mlsummerinternship-54rsps3yfbjeye6imjcywi.streamlit.app/
