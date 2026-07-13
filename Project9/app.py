@@ -17,7 +17,7 @@ import numpy as np
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="AI Inference Hub",
+    page_title="👁️ Male & Female Eye Detection",
     page_icon="⚡",
     layout="centered",
     initial_sidebar_state="collapsed"
