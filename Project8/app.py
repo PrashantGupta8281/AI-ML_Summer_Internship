@@ -72,6 +72,17 @@ random_state = st.sidebar.number_input("Random Seed State", min_value=0, max_val
 
 st.sidebar.divider()
 st.sidebar.info("💡 **Tip:** Adjusting **K** alters the decision boundaries. Odd numbers prevent voting ties!")
+st.sidebar.title("My Portfolio")
+
+st.sidebar.markdown("""
+### 👋 About Me
+
+**Name:** Prashant Gupta
+
+🔗 **LinkedIn:** [Click Here](https://www.linkedin.com/in/prashant-gupta-012320389?utm_source=share_via&utm_content=profile&utm_medium=member_android)
+
+💻 **GitHub:** [Click Here](https://github.com/PrashantGupta8281/AI-ML_Summer_Internship)
+""")
 
 # ==========================================
 # 4. MAIN INTERACTIVE DASHBOARD
