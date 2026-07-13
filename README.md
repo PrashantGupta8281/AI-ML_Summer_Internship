@@ -11,6 +11,6 @@ Project5 : https://project5-6mwqw6dnp3xkhb9v9t2cnu.streamlit.app/
 Project6 : https://ai-mlsummerinternship-k8ma7cbowlaaehj5iq2gxx.streamlit.app/
 
 
-Project7 : https://project7-2ljr6doqrichkwyhfefhcp.streamlit.app/
+Project7 : https://ai-mlsummerinternship-a9dqqlmec4w8l3xtfw5cfs.streamlit.app/
 
 Project8 : https://irisusingknnp8-cbjufqfjd9wyzt3wk9ngpn.streamlit.app/
