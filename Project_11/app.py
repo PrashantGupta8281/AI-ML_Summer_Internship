@@ -17,12 +17,6 @@ Key NLP Tasks Demonstrated
 * Text Summarization → Generate concise review summaries
 * Model Evaluation → Accuracy, F1 Score, BLEU Score
 
-# Insert necessary Libraries
-"""
-
-!pip install transformers evaluate
- !pip install -U transformers sentencepiece sacremoses
- !pip install evaluate
 
 """# Check the version of Trnasformation"""
 
