@@ -8,7 +8,7 @@ Sophisticated & Visual-Enhanced Production Version
 # 1. DEPENDENCY INSTALLATION & INITIALIZATION
 # ==========================================
 #%%capture
-!pip install transformers evaluate sentencepiece sacremoses pandas torch
+#!pip install transformers evaluate sentencepiece sacremoses pandas torch
 
 import transformers
 import pandas as pd
