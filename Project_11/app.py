@@ -33,7 +33,7 @@ header_html = (
     "<p style='color: #dcdde1; margin: 8px 0 0 0; font-size: 14px;'>Production-Ready Sentiment Hub Powered by DistilBERT & Streamlit</p>"
     "</div>"
 )
-st.markdown(header_html, unsafe_html=True)
+st.markdown(header_html, unsafe_allow_html=True)
 
 # 4. Data Ingestion Selection
 st.markdown("### 📦 Data Ingestion Control")
@@ -92,7 +92,7 @@ dashboard_html = (
     f"</div>"
     f"</div>"
 )
-st.markdown(dashboard_html, unsafe_html=True)
+st.markdown(dashboard_html, unsafe_allow_html=True)
 
 # 8. Main Visual Cards Container Setup
 st.markdown("### 🔍 Deep Learning Inference Matrix")
@@ -145,7 +145,7 @@ if st.button("⚡ Trigger Neural Evaluation", use_container_width=True):
         f"</div>"
         f"</div>"
     )
-    st.markdown(playground_ui, unsafe_html=True)
+    st.markdown(playground_ui, unsafe_allow_html=True)
 
 # 10. Pipeline Footer
 footer_html = (
@@ -154,4 +154,4 @@ footer_html = (
     "<span style='background: transparent; color: #94a3b8; font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;'>✨ End of Streamlit Dashboard Runtime ✨</span>"
     "</div>"
 )
-st.markdown(footer_html, unsafe_html=True)
+st.markdown(footer_html, unsafe_allow_html=True)
