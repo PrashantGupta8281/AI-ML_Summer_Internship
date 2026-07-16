@@ -7,7 +7,7 @@ import streamlit as st
 import pandas as pd
 import torch
 from transformers import pipeline
-import evaluate
+from sklearn.metrics import accuracy_score, f1_score
 
 # 1. Page Configuration
 st.set_page_config(
@@ -21,13 +21,8 @@ st.set_page_config(
 def load_nlp_pipeline():
     return pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
 
-@st.cache_resource
-def load_metrics():
-    return evaluate.load("accuracy"), evaluate.load("f1")
-
-# Initialize models and evaluation tools quietly
+# Initialize model pipeline quietly
 classifier = load_nlp_pipeline()
-accuracy, f1 = load_metrics()
 
 # 3. Sophisticated Success Banner Header
 st.markdown("""
@@ -71,12 +66,13 @@ real_labels = df['Class'].tolist()
 # 5. Batch Inference Execution
 predicted_labels = classifier(reviews)
 
-# 6. Performance Evaluation Dashboard Calculations
+# 6. Performance Evaluation Dashboard Calculations via Scikit-Learn (Local Math)
 references = [1 if str(label).upper() == "POSITIVE" else 0 for label in real_labels]
 predictions = [1 if label['label'] == "POSITIVE" else 0 for label in predicted_labels]
 
-accuracy_result = accuracy.compute(references=references, predictions=predictions)['accuracy']
-f1_result = f1.compute(references=references, predictions=predictions)['f1']
+# High-reliability metric calculation (handles edge cases smoothly)
+accuracy_result = accuracy_score(references, predictions)
+f1_result = f1_score(references, predictions, average='macro', zero_division=0)
 
 # 7. Render Executive Dashboard
 dashboard_html = f"""
