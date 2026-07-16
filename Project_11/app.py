@@ -118,7 +118,7 @@ for i, (review, prediction, label) in enumerate(zip(reviews, predicted_labels, r
         f"</div>"
         f"</div>"
     )
-    st.markdown(card_html, unsafe_html=True)
+    st.markdown(card_html, unsafe_allow_html=True)
 
 # 9. Dynamic Interactive Sandbox
 st.markdown("### 🧪 Real-Time Testing Sandbox")
