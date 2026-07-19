@@ -19,4 +19,4 @@ Project9 : https://project9-vhvtm5crvxbs4eppqvnhpy.streamlit.app/
 
 Project10 : https://project10-2ffqeecwnfywua7gj733mv.streamlit.app/
 
-Project11 : https://kgfreview-gfwqchk3cua3pdg3mpwusy.streamlit.app/
+Project11 : https://ai-mlsummerinternship-5eabqffmdlxbsgecw3y3rg.streamlit.app/
