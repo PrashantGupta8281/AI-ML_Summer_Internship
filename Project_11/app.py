@@ -21,8 +21,8 @@ Key NLP Tasks Demonstrated
 """
 
 !pip install transformers evaluate
- !pip install -U transformers sentencepiece sacremoses
- !pip install evaluate
+!pip install -U transformers sentencepiece sacremoses
+!pip install evaluate
 
 """# Check the version of Trnasformation"""
 
