@@ -99,7 +99,7 @@ col1, col2 = st.columns([1, 2.2])
 with col1:
     try:
         # Changed format from .jpg to .png here
-        poster_img = Image.open("kgf2_poster.png")
+        poster_img = Image.open("Project_11/kgf2_poster.png")
         st.image(poster_img, use_container_width=True, caption="K.G.F Chapter 2 - The Legacy Continues")
     except FileNotFoundError:
         st.warning("⚠️ For a fully stunning visual layout, place your K.G.F 2 poster image as 'kgf2_poster.png' in your app directory.")
